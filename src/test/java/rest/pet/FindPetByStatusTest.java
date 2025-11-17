@@ -23,80 +23,81 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class FindPetByStatusTest {
+    public class FindPetByStatusTest {
 
-    private PetsStoreApi petsStoreApi;
-    List<String> photoUrl = Collections.singletonList("svgPhoto1");
-    List<TagDTO> tags = List.of(Tags.DOG_TAG.getTag(), Tags.COLOR_WHITE_TAG.getTag());
-    Random random = new Random(12345L);
+        private PetsStoreApi petsStoreApi;
+        List<String> photoUrl = Collections.singletonList("svgPhoto1");
+        List<TagDTO> tags = List.of(Tags.DOG_TAG.getTag(), Tags.COLOR_WHITE_TAG.getTag());
+        Random random = new Random(12345L);
 
-    @BeforeEach
-    void setUp() {
-        petsStoreApi = new PetsStoreApi();
-        ((Logger) LoggerFactory.getLogger("org.apache.http")).setLevel(Level.INFO);
-        ((Logger) LoggerFactory.getLogger("io.restassured")).setLevel(Level.INFO);
-    }
+        @BeforeEach
+        void setUp() {
+            petsStoreApi = new PetsStoreApi();
+            ((Logger) LoggerFactory.getLogger("org.apache.http")).setLevel(Level.INFO);
+            ((Logger) LoggerFactory.getLogger("io.restassured")).setLevel(Level.INFO);
+        }
 
-    @Test
-    @DisplayName("RestApi. Проверка поиска питомца по статусу. Проверка заполненности полей")
-    void petFindByStatus(){
-        final PetDTO newDog = PetDTO.builder()
-                .id(random.nextLong())
-                .category(Category.DOG.getCategory())
-                .name("Hasky")
-                .photoUrls(photoUrl)
-                .tags(tags)
-                .status(StatusPet.AVAILABLE.getTitle())
-                .build();
-        petsStoreApi.addNewPet(newDog)
-                        .statusCode(HttpStatus.SC_OK);
+        @Test
+        @DisplayName("RestApi. Проверка поиска питомца по статусу. Проверка заполненности полей")
+        void petFindByStatus(){
+            final PetDTO newDog = PetDTO.builder()
+                    .id(random.nextLong())
+                    .category(Category.DOG.getCategory())
+                    .name("Hasky")
+                    .photoUrls(photoUrl)
+                    .tags(tags)
+                    .status(StatusPet.AVAILABLE.getTitle())
+                    .build();
+            petsStoreApi.addNewPet(newDog)
+                    .statusCode(HttpStatus.SC_OK);
 
-        petsStoreApi.petFindByStatus(StatusPet.AVAILABLE)
-                .statusCode(HttpStatus.SC_OK)
-                .body("id", notNullValue())
-                .body("category", notNullValue())
-                .body("name", notNullValue())
-                .body("photoUrls", notNullValue())
-                .body("tags", notNullValue())
-                .body("status", containsString(StatusPet.AVAILABLE.getTitle()));;
-    }
+            petsStoreApi.petFindByStatus(StatusPet.AVAILABLE)
+                    .statusCode(HttpStatus.SC_OK)
+                    .body("id", notNullValue())
+                    .body("category", notNullValue())
+                    .body("name", notNullValue())
+                    .body("photoUrls", notNullValue())
+                    .body("tags", notNullValue())
+                    .body("status", containsString(StatusPet.AVAILABLE.getTitle()));;
+        }
 
-    @Test
-    @DisplayName("RestApi. Проверка поиска питомца по статусу. Проверка времени отработки")
-    void checkTimeLimit(){
-        final PetDTO newDog = PetDTO.builder()
-                .id(random.nextLong())
-                .category(Category.DOG.getCategory())
-                .name("Hasky")
-                .photoUrls(photoUrl)
-                .tags(tags)
-                .status(StatusPet.SOLD.getTitle())
-                .build();
-        petsStoreApi.addNewPet(newDog)
-                .statusCode(HttpStatus.SC_OK);
+        @Test
+        @DisplayName("RestApi. Проверка поиска питомца по статусу. Проверка времени отработки")
+        void checkTimeLimit(){
+            final PetDTO newDog = PetDTO.builder()
+                    .id(random.nextLong())
+                    .category(Category.DOG.getCategory())
+                    .name("Hasky")
+                    .photoUrls(photoUrl)
+                    .tags(tags)
+                    .status(StatusPet.SOLD.getTitle())
+                    .build();
+            petsStoreApi.addNewPet(newDog)
+                    .statusCode(HttpStatus.SC_OK);
 
-        petsStoreApi.petFindByStatus(StatusPet.SOLD)
-                .statusCode(HttpStatus.SC_OK)
-                .time(lessThan(1500L));
-    }
+            petsStoreApi.petFindByStatus(StatusPet.SOLD)
+                    .statusCode(HttpStatus.SC_OK)
+                    .time(lessThan(1500L));
+        }
 
-    @Test
-    @DisplayName("RestApi. Проверка поиска питомца по статусу. Проверка полученных данных по схеме")
-    void checkMessageToSchema(){
+        @Test
+        @DisplayName("RestApi. Проверка поиска питомца по статусу. Проверка полученных данных по схеме")
+        void checkMessageToSchema(){
 
-        final PetDTO newDog = PetDTO.builder()
-                .id(random.nextLong())
-                .category(Category.DOG.getCategory())
-                .name("Hasky")
-                .photoUrls(photoUrl)
-                .tags(tags)
-                .status(StatusPet.PENDING.getTitle())
-                .build();
-        petsStoreApi.addNewPet(newDog)
-                .statusCode(HttpStatus.SC_OK);
+            final PetDTO newDog = PetDTO.builder()
+                    .id(random.nextLong())
+                    .category(Category.DOG.getCategory())
+                    .name("Hasky")
+                    .photoUrls(photoUrl)
+                    .tags(tags)
+                    .status(StatusPet.PENDING.getTitle())
+                    .build();
+            petsStoreApi.addNewPet(newDog)
+                    .statusCode(HttpStatus.SC_OK);
 
-        petsStoreApi.petFindByStatus(StatusPet.PENDING)
-                .statusCode(HttpStatus.SC_OK)
-                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/FindPet.json"));
+            petsStoreApi.petFindByStatus(StatusPet.PENDING)
+                    .statusCode(HttpStatus.SC_OK)
+                    .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/FindPet.json"));
+        }
     }
 }
