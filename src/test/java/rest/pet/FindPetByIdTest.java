@@ -26,8 +26,8 @@ public class FindPetByIdTest {
 
     List<String> photoUrl = Collections.singletonList("svgPhoto1");
     List<TagDTO> tags = List.of(Tags.DOG_TAG.getTag(), Tags.COLOR_WHITE_TAG.getTag());
-    private PetsStoreApi petsStoreApi;
     Random random = new Random(12345L);
+    private PetsStoreApi petsStoreApi;
 
     @BeforeEach
     void setUp() {
@@ -60,7 +60,7 @@ public class FindPetByIdTest {
 
     @Test
     @DisplayName("Проверка поиска удаленного питомца по его id")
-    void findDeletedPetByIdTest(){
+    void findDeletedPetByIdTest() {
 
         final PetDTO cat = PetDTO.builder()
                 .id(random.nextLong())
@@ -76,7 +76,7 @@ public class FindPetByIdTest {
                 .extract().body().as(PetResponseDTO.class);
 
         petsStoreApi.petDeleteByPetId(cat.getId())
-                        .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK);
 
         petsStoreApi.petFindByPetId(cat.getId())
                 .statusCode(HttpStatus.SC_NOT_FOUND)

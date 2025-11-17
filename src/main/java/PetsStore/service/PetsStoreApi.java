@@ -14,54 +14,54 @@ public class PetsStoreApi {
     private static final String PET_ENDPOINT = "/pet";
     private static final String PET_FIND_BY_STATUS_ENDPOINT = "/pet/findByStatus";
 
-    private RequestSpecification base_spec;
+    private final RequestSpecification base_spec;
 
-    public PetsStoreApi(){
+    public PetsStoreApi() {
         base_spec = given()
                 .baseUri(BASE_URL)
                 .contentType(ContentType.JSON)
                 .log().all();
     }
 
-    public ValidatableResponse addNewPet (final PetDTO petDTO) {
-        return
-            given(base_spec)
-                .basePath(PET_ENDPOINT)
-                .body(petDTO)
-            .when()
-                .post()
-            .then()
-                .log().all();
-    }
-
-    public ValidatableResponse petFindByStatus (final StatusPet statusPet) {
-        return
-            given(base_spec)
-                .basePath(PET_FIND_BY_STATUS_ENDPOINT)
-                .queryParam(statusPet.getTitle())
-            .when()
-                .get()
-            .then()
-                .log().all();
-    }
-
-    public ValidatableResponse petDeleteByPetId(final long petId){
+    public ValidatableResponse addNewPet(final PetDTO petDTO) {
         return
                 given(base_spec)
-                        .basePath(PET_ENDPOINT + "/" + petId)
-                .when()
-                        .delete()
-                .then()
+                        .basePath(PET_ENDPOINT)
+                        .body(petDTO)
+                        .when()
+                        .post()
+                        .then()
                         .log().all();
     }
 
-    public ValidatableResponse petFindByPetId(final long petId){
+    public ValidatableResponse petFindByStatus(final StatusPet statusPet) {
+        return
+                given(base_spec)
+                        .basePath(PET_FIND_BY_STATUS_ENDPOINT)
+                        .queryParam(statusPet.getTitle())
+                        .when()
+                        .get()
+                        .then()
+                        .log().all();
+    }
+
+    public ValidatableResponse petDeleteByPetId(final long petId) {
         return
                 given(base_spec)
                         .basePath(PET_ENDPOINT + "/" + petId)
-                .when()
+                        .when()
+                        .delete()
+                        .then()
+                        .log().all();
+    }
+
+    public ValidatableResponse petFindByPetId(final long petId) {
+        return
+                given(base_spec)
+                        .basePath(PET_ENDPOINT + "/" + petId)
+                        .when()
                         .get()
-                .then()
+                        .then()
                         .log().all();
     }
 }

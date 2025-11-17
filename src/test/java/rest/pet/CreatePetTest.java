@@ -28,8 +28,8 @@ public class CreatePetTest {
 
     List<String> photoUrl = Collections.singletonList("svgPhoto1");
     List<TagDTO> tags = List.of(Tags.DOG_TAG.getTag(), Tags.COLOR_WHITE_TAG.getTag());
-    private PetsStoreApi petsStoreApi;
     Random random = new Random(12345L);
+    private PetsStoreApi petsStoreApi;
 
     @BeforeEach
     void setUp() {
