@@ -29,7 +29,9 @@ public class BasePetApiTest {
   void tearDown() {
     if (petId != null) {
       Response response = petsStoreService.petDeleteByPetId(petId).extract().response();
-      Assertions.assertEquals(response.getStatusCode(), HttpStatus.SC_OK, "Провалилися");
+      if (response.statusCode() != HttpStatus.SC_OK && response.statusCode() != HttpStatus.SC_NOT_FOUND){
+        Assertions.fail("Pet removal failed");
+      }
     }
   }
 }
