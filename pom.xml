@@ -22,7 +22,7 @@
         <lombok.version>1.18.30</lombok.version>
         <logback-classic>1.4.11</logback-classic>
 
-        <base.url>https://auto.mail.ru</base.url>
+        <base.url>https://petstore.swagger.io/v2</base.url>
         <browser.name>chrome</browser.name>
     </properties>
 
@@ -80,6 +80,24 @@
                         <browser.name>${browser.name}</browser.name>
                     </systemPropertyVariables>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <configLocation>${project.build.sourceDirectory}/../resources/checkstyle.xml</configLocation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>analyze-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

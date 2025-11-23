@@ -1,4 +1,4 @@
-package PetsStore.dto;
+package petsstore.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -8,8 +8,6 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @Jacksonized
 public class CategoryDTO {
-
-    private Long id;
-    private String name;
-
+  private Long id;
+  private String name;
 }

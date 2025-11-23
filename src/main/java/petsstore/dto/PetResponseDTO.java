@@ -1,0 +1,21 @@
+package petsstore.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import java.util.List;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@SuppressWarnings("EI_EXPOSE_REP2")
+public class PetResponseDTO {
+
+  private CategoryDTO category;
+  private Long id;
+  private String name;
+  private List<String> photoUrls;
+  private String status;
+  private List<TagDTO> tags;
+
+}
