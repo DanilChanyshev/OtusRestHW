@@ -1,10 +1,10 @@
 package petsstore.dto;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
-@Data
+@Value
 @Builder
 @Jacksonized
 public class CategoryDTO {

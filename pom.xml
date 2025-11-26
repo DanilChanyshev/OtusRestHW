@@ -22,6 +22,7 @@
         <lombok.version>1.18.30</lombok.version>
         <logback-classic>1.4.11</logback-classic>
         <checkstyle.plagin>3.3.1</checkstyle.plagin>
+        <spotbugs.version>4.8.6.0</spotbugs.version>
 
         <base.url>https://petstore.swagger.io/v2</base.url>
         <browser.name>chrome</browser.name>
@@ -94,6 +95,23 @@
                     <execution>
                         <id>analyze-compile</id>
                         <phase>compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs.version}</version> <!-- Актуальная версия на 2025 год -->
+                <configuration>
+                    <effort>Max</effort>
+                    <threshold>Medium</threshold> <!-- Low, Medium, High -->
+                    <failOnError>true</failOnError>
+                </configuration>
+                <executions>
+                    <execution>
                         <goals>
                             <goal>check</goal>
                         </goals>
