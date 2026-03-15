@@ -10,8 +10,8 @@
 
     <properties>
         <maven.version>3.14.0</maven.version>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <junit.version>5.10.0</junit.version>
@@ -70,6 +70,13 @@
                 <configuration>
                     <target>${maven.compiler.target}</target>
                     <source>${maven.compiler.source}</source>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
@@ -104,10 +111,10 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugs.version}</version> <!-- Актуальная версия на 2025 год -->
+                <version>${spotbugs.version}</version>
                 <configuration>
                     <effort>Max</effort>
-                    <threshold>Medium</threshold> <!-- Low, Medium, High -->
+                    <threshold>Medium</threshold>
                     <failOnError>true</failOnError>
                 </configuration>
                 <executions>
