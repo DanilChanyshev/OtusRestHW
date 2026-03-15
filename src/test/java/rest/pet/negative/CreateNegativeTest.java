@@ -1,5 +1,8 @@
 package rest.pet.negative;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +22,9 @@ public class CreateNegativeTest extends BasePetApiTest {
           Tags.COLOR_WHITE_TAG.getTag());
 
   @Test
+  @Epic("Pet API Negative")
+  @Feature("Create pet")
+  @Story("Create pet")
   @DisplayName("RespApi. Проверка создания питомца без обязательных полей.")
   void createPetWithoutRequiredFieldTest() {
     PetDTO invalidPet = PetDTO.builder()

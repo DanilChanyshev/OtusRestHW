@@ -1,5 +1,8 @@
 package rest.pet.positive;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
@@ -25,6 +28,9 @@ public class FindPetByStatusTest extends BasePetApiTest {
   private static final StatusPet STATUS = StatusPet.SOLD;
 
   @Test
+  @Epic("Pet API")
+  @Feature("Find pet")
+  @Story("Find pet successfully with status")
   @DisplayName("RestApi. Проверка поиска питомца по статусу. Проверка заполненности полей")
   void petFindByStatus() {
     final PetDTO newDog = PetDTO.builder()
@@ -62,6 +68,9 @@ public class FindPetByStatusTest extends BasePetApiTest {
   }
 
   @Test
+  @Epic("Pet API")
+  @Feature("Find pet")
+  @Story("Find pet successfully with status and check timezone")
   @DisplayName("RestApi. Проверка поиска питомца по статусу. Проверка времени отработки")
   void checkTimeLimit() {
     final PetDTO newDog = PetDTO.builder()

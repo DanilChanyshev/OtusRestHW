@@ -1,5 +1,8 @@
 package rest.pet.positive;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -19,6 +22,9 @@ public class FindPetByIdPositiveTest extends BasePetApiTest {
   private static final List<String> PHOTO_URLS = Collections.singletonList("svgPhoto1");
 
   @Test
+  @Epic("Pet API")
+  @Feature("Find pet")
+  @Story("Find pet successfully with id")
   @DisplayName("Проверка поиска удаленного питомца по его id")
   void findDeletedPetByIdTest() {
 
