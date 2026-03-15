@@ -1,5 +1,6 @@
 package petsstore.service;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
@@ -23,6 +24,7 @@ public class PetsStoreServiceImpl implements PetsStoreService{
   }
 
   @Override
+  @Step("Запись нового питомца")
   public ValidatableResponse addNewPet(final PetDTO petDTO) {
     return
             RestAssured.given(baseSpec)
@@ -35,6 +37,7 @@ public class PetsStoreServiceImpl implements PetsStoreService{
   }
 
   @Override
+  @Step("Поиск питомца по статусу")
   public ValidatableResponse petFindByStatus(final StatusPet statusPet) {
     return
             RestAssured.given(baseSpec)
@@ -47,6 +50,7 @@ public class PetsStoreServiceImpl implements PetsStoreService{
   }
 
   @Override
+  @Step("Удалить питомца по id")
   public ValidatableResponse petDeleteByPetId(final long petId) {
     return
             RestAssured.given(baseSpec)
@@ -58,6 +62,7 @@ public class PetsStoreServiceImpl implements PetsStoreService{
   }
 
   @Override
+  @Step("Поиск питомца по id")
   public ValidatableResponse petFindByPetId(final long petId) {
     return
             RestAssured.given(baseSpec)

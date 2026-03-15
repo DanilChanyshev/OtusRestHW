@@ -18,4 +18,14 @@ node('api-test-runner') {
         junit 'target/surefire-reports/*.xml'
     }
 
+    stage('allure publish') {
+        allure ([
+                includeProperties: false,
+                jdk: '',
+                properties: [],
+                reportBuildPolicy: 'ALWAYS',
+                results: [[path: 'allure-results']]
+        ])
+    }
+
 }
