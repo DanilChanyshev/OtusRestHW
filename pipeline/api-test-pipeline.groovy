@@ -12,7 +12,7 @@ node('api-test-runner') {
 
     stage('Run API tests') {
         dir("${env.WORKSPACE}") {
-            sh "mvn clean test"
+            sh "mvn clean test allure:report"
         }
     }
 

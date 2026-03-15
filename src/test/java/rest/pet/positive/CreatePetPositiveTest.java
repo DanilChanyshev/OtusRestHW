@@ -1,5 +1,8 @@
 package rest.pet.positive;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
@@ -26,6 +29,9 @@ public class CreatePetPositiveTest extends BasePetApiTest {
   private static final String PET_SCHEMA = "schema/CreatePetSchema.json";
 
   @Test
+  @Epic("Pet API")
+  @Feature("Create pet")
+  @Story("Create a new pet successfully")
   @DisplayName("RespApi. Проверка создания питомца. Проверка возвращаемых данных")
   void createNewPetTest() {
     PetDTO newDog = PetDTO.builder()
