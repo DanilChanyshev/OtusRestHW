@@ -11,7 +11,9 @@ node('api-test-runner') {
     }
 
     stage('Run API tests') {
-        sh "mvn clean test"
+        dir("${env.WORKSPACE}") {
+            sh "mvn clean test"
+        }
     }
 
     stage('Publish results') {
@@ -24,7 +26,7 @@ node('api-test-runner') {
                 jdk: '',
                 properties: [],
                 reportBuildPolicy: 'ALWAYS',
-                results: [[path: 'allure-results']]
+                results: [[path: '${env.WORKSPACE}/target/allure-results']]
         ])
     }
 
