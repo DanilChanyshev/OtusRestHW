@@ -17,7 +17,7 @@ node('api-test-runner') {
     }
 
     stage('Publish results') {
-        junit 'target/surefire-reports/*.xml'
+        junit '${env.WORKSPACE}/target/surefire-reports/*.xml'
     }
 
     stage('allure publish') {
