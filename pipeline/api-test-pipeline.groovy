@@ -12,12 +12,14 @@ node('api-test-runner') {
 
     stage('Run API tests') {
         dir("${env.WORKSPACE}") {
-            sh "mvn clean test allure:report"
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                sh "mvn clean test allure:report"
+            }
         }
     }
 
     stage('Publish results') {
-        junit '${env.WORKSPACE}/target/surefire-reports/*.xml'
+        junit 'target/surefire-reports/*.xml'
     }
 
     stage('allure publish') {
