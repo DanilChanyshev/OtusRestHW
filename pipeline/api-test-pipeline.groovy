@@ -17,7 +17,7 @@ node('api-test-runner') {
     }
 
     stage('Publish results') {
-        junit 'target/surefire-reports/*.xml'
+        junit '${env.WORKSPACE}/target/surefire-reports/*.xml'
     }
 
     stage('allure publish') {
@@ -26,7 +26,7 @@ node('api-test-runner') {
                 jdk: '',
                 properties: [],
                 reportBuildPolicy: 'ALWAYS',
-                results: [[path: '${env.WORKSPACE}/target/allure-results']]
+                results: [[path: 'allure-results']]
         ])
     }
 
