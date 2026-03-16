@@ -26,7 +26,7 @@ node('api-test-runner') {
                 jdk: '',
                 properties: [],
                 reportBuildPolicy: 'ALWAYS',
-                results: [[path: '${env.WORKSPACE}/target/allure-results']]
+                results: [[path: 'allure-results']]
         ])
     }
 
