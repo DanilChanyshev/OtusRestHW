@@ -18,6 +18,7 @@
         <guice.version>7.0.0</guice.version>
         <assertj.version>3.27.6</assertj.version>
         <allure.version>2.29.0</allure.version>
+        <aspectj.version>1.9.22</aspectj.version>
         <surefire-plugin.version>3.5.3</surefire-plugin.version>
         <rest-assured.version>5.5.6</rest-assured.version>
         <lombok.version>1.18.30</lombok.version>
@@ -65,6 +66,11 @@
             <artifactId>json-schema-validator</artifactId>
             <version>${rest-assured.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <version>3.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -90,11 +96,20 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
                 <configuration>
+                    <argLine>-javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar</argLine>
                     <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
                         <browser.name>${browser.name}</browser.name>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
