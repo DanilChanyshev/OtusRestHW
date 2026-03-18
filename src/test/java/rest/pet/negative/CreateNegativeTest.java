@@ -13,7 +13,6 @@ import petsstore.model.Category;
 import petsstore.model.Tags;
 import rest.pet.BasePetApiTest;
 import wiremock.stubs.PetStubs;
-
 import java.util.List;
 
 public class CreateNegativeTest extends BasePetApiTest {

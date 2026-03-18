@@ -18,7 +18,6 @@ import petsstore.model.StatusPet;
 import petsstore.model.Tags;
 import rest.pet.BasePetApiTest;
 import wiremock.stubs.PetStubs;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
