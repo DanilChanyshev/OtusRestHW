@@ -4,6 +4,7 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.restassured.module.jsv.JsonSchemaValidator;
+import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -16,6 +17,8 @@ import petsstore.model.Category;
 import petsstore.model.StatusPet;
 import petsstore.model.Tags;
 import rest.pet.BasePetApiTest;
+import wiremock.stubs.PetStubs;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +30,7 @@ public class FindPetByStatusTest extends BasePetApiTest {
   private static final String FIND_PET_SCHEMA = "schema/CreatePetSchema.json";
   private static final StatusPet STATUS = StatusPet.SOLD;
 
+  @SneakyThrows
   @Test
   @Epic("Pet API")
   @Feature("Find pet")
@@ -43,6 +47,9 @@ public class FindPetByStatusTest extends BasePetApiTest {
             .build();
 
     petId = newDog.getId();
+
+    PetStubs.stubCreatePet(wireMockServer, newDog);
+    PetStubs.stubFindByStatus(wireMockServer, STATUS, List.of(newDog));
 
     petsStoreService.addNewPet(newDog)
             .statusCode(HttpStatus.SC_OK)
@@ -67,6 +74,7 @@ public class FindPetByStatusTest extends BasePetApiTest {
     }
   }
 
+  @SneakyThrows
   @Test
   @Epic("Pet API")
   @Feature("Find pet")
@@ -83,6 +91,9 @@ public class FindPetByStatusTest extends BasePetApiTest {
             .build();
 
     petId = newDog.getId();
+
+    PetStubs.stubCreatePet(wireMockServer, newDog);
+    PetStubs.stubFindByStatus(wireMockServer, StatusPet.SOLD, List.of(newDog));
 
     petsStoreService.addNewPet(newDog)
             .statusCode(HttpStatus.SC_OK);
