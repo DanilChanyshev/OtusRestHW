@@ -9,7 +9,7 @@ node('api-test-runner') {
     stage('Run API tests') {
         dir("${env.WORKSPACE}") {
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                sh "ansible-playbook -i playbook/inventory/hosts playbook/run_ui_test.yaml -e \"workspace=\$(pwd)\""
+                sh "ansible-playbook -i playbook/inventory/hosts playbook/run_api_test.yaml -e \"workspace=\$(pwd)\""
             }
         }
     }
