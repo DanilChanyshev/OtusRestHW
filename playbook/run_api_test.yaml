@@ -1,6 +1,6 @@
 - name: Run API tests
   hosts: api-test
-  become: yes
+  become: false
   remote_user: root
   roles:
     - run_test
