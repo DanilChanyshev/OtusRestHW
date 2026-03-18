@@ -5,6 +5,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
+import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +18,8 @@ import petsstore.model.Category;
 import petsstore.model.StatusPet;
 import petsstore.model.Tags;
 import rest.pet.BasePetApiTest;
+import wiremock.stubs.PetStubs;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -28,6 +31,7 @@ public class CreatePetPositiveTest extends BasePetApiTest {
           Tags.COLOR_WHITE_TAG.getTag());
   private static final String PET_SCHEMA = "schema/CreatePetSchema.json";
 
+  @SneakyThrows
   @Test
   @Epic("Pet API")
   @Feature("Create pet")
@@ -42,6 +46,9 @@ public class CreatePetPositiveTest extends BasePetApiTest {
             .tags(PET_TAG)
             .status(StatusPet.AVAILABLE.getTitle())
             .build();
+
+    PetStubs.stubCreatePet(wireMockServer, newDog);
+    PetStubs.stubGetPetById(wireMockServer, newDog);
 
     Response response = petsStoreService.addNewPet(newDog)
             .statusCode(HttpStatus.SC_OK)

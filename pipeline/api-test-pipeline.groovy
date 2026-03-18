@@ -6,14 +6,10 @@ node('api-test-runner') {
         checkout scm
     }
 
-    stage('Build') {
-        sh "mvn clean compile"
-    }
-
     stage('Run API tests') {
         dir("${env.WORKSPACE}") {
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                sh "mvn clean test allure:report"
+                sh "ansible-playbook -i playbook/inventory/hosts playbook/run_ui_test.yaml -e \"workspace=\$(pwd)\""
             }
         }
     }
@@ -28,7 +24,7 @@ node('api-test-runner') {
                 jdk: '',
                 properties: [],
                 reportBuildPolicy: 'ALWAYS',
-                results: [[path: 'allure-results']]
+                results: [[path: 'target/allure-results']]
         ])
     }
 

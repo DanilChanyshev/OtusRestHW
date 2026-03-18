@@ -3,6 +3,7 @@ package rest.pet.positive;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +15,8 @@ import petsstore.model.Category;
 import petsstore.model.StatusPet;
 import petsstore.model.Tags;
 import rest.pet.BasePetApiTest;
+import wiremock.stubs.PetStubs;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -21,6 +24,7 @@ public class FindPetByIdPositiveTest extends BasePetApiTest {
 
   private static final List<String> PHOTO_URLS = Collections.singletonList("svgPhoto1");
 
+  @SneakyThrows
   @Test
   @Epic("Pet API")
   @Feature("Find pet")
@@ -37,6 +41,9 @@ public class FindPetByIdPositiveTest extends BasePetApiTest {
             .status(StatusPet.PENDING.getTitle())
             .build();
 
+    PetStubs.stubCreatePet(wireMockServer, cat);
+    PetStubs.stubGetPetById(wireMockServer, cat);
+
     petsStoreService.addNewPet(cat)
             .statusCode(HttpStatus.SC_OK)
             .extract().body().as(PetResponseDTO.class);
@@ -52,6 +59,9 @@ public class FindPetByIdPositiveTest extends BasePetApiTest {
             () -> Assertions.assertEquals(cat.getStatus(), actualPet.getStatus(), "GET: Expected status '%s', but got '%s'".formatted(cat.getStatus(), actualPet.getStatus())),
             () -> Assertions.assertEquals(cat.getId(), actualPet.getId(), "GET: Expected pet id '%s', but got '%s'".formatted(cat.getId(), actualPet.getId()))
     );
+
+    PetStubs.stubDeletePet(wireMockServer, petId);
+    PetStubs.stubPetNotFound(wireMockServer, petId);
 
     petsStoreService.petDeleteByPetId(cat.getId())
             .statusCode(HttpStatus.SC_OK);

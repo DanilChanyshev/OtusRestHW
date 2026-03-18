@@ -18,10 +18,14 @@
         <guice.version>7.0.0</guice.version>
         <assertj.version>3.27.6</assertj.version>
         <allure.version>2.29.0</allure.version>
+        <aspectj.version>1.9.22</aspectj.version>
         <surefire-plugin.version>3.5.3</surefire-plugin.version>
         <rest-assured.version>5.5.6</rest-assured.version>
         <lombok.version>1.18.30</lombok.version>
         <logback-classic>1.4.11</logback-classic>
+        <wiremock.version>3.13.1</wiremock.version>
+        <mockito.version>5.21.0</mockito.version>
+        <json-schema-validator.version>2.2.14</json-schema-validator.version>
         <checkstyle.plagin>3.3.1</checkstyle.plagin>
         <spotbugs.version>4.8.6.0</spotbugs.version>
 
@@ -30,6 +34,21 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wiremock</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>${wiremock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.java-json-tools</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>${json-schema-validator.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
@@ -90,11 +109,20 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
                 <configuration>
+                    <argLine>-javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar</argLine>
                     <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
                         <browser.name>${browser.name}</browser.name>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

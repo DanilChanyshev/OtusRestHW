@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import petsstore.dto.PetDTO;
 import petsstore.dto.TagDTO;
 import petsstore.model.Category;
-import petsstore.model.StatusPet;
 import petsstore.model.Tags;
 import rest.pet.BasePetApiTest;
+import wiremock.stubs.PetStubs;
+
 import java.util.List;
 
 public class CreateNegativeTest extends BasePetApiTest {
@@ -27,18 +28,24 @@ public class CreateNegativeTest extends BasePetApiTest {
   @Story("Create pet")
   @DisplayName("RespApi. Проверка создания питомца без обязательных полей.")
   void createPetWithoutRequiredFieldTest() {
+
     PetDTO invalidPet = PetDTO.builder()
-            .id(RANDOM.nextLong())
+            .name("Hasky")
+            .id(Math.abs(RANDOM.nextLong()))
             .category(Category.DOG.getCategory())
             .tags(PET_TAG)
-            .status(StatusPet.AVAILABLE.getTitle())
             .build();
+
+    PetStubs.stubCreatePetInvalid(wireMockServer);
+    PetStubs.stubPetNotFound(wireMockServer, invalidPet.getId());
 
     petsStoreService.addNewPet(invalidPet)
             .statusCode(HttpStatus.SC_BAD_REQUEST)
             .body("message", Matchers.containsString("Invalid input"));
 
     petsStoreService.petFindByPetId(invalidPet.getId())
-            .statusCode(HttpStatus.SC_NOT_FOUND);
+            .statusCode(HttpStatus.SC_NOT_FOUND)
+            .body("type", Matchers.equalTo("error"))
+            .body("message", Matchers.equalTo("Pet not found"));
   }
 }
