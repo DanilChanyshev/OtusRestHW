@@ -28,4 +28,11 @@ node('api-test-runner') {
         ])
     }
 
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/allure-results/**',
+                    allowEmptyArchive: true,
+                    fingerprint: true
+        }
+    }
 }
