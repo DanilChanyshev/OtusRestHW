@@ -1,3 +1,9 @@
+properties([
+        pipelineTriggers([
+                githubPush()
+        ])
+])
+
 node('api-test-runner') {
 
     currentBuild.description = "<p style='color: blue;'>API tests</p>"
