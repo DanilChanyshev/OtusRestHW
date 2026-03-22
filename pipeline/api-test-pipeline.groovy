@@ -29,6 +29,8 @@ node('api-test-runner') {
     }
 
     stage('Archive allure results') {
-        archiveArtifacts artifacts: 'target/allure-results/**'
+        archiveArtifacts artifacts: 'target/allure-results/**',
+                allowEmptyArchive: true,
+                fingerprint: true
     }
 }
